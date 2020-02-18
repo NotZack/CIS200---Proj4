@@ -40,6 +40,12 @@ public class Proj4 {
     // int[] value = {9, 7, 8, 14, 11};
     // int[] suit = {1,2,3,4,1};
 
+    Scanner scnr = new Scanner(Scanner.in);
+
+    private static final String LAST_NAME = "Nichol";
+    private static final int WID = 821027744;
+    private static final String PASSWORD = "CIS200$Spr20";
+
     public static void main(String[] args) {
 
     }
