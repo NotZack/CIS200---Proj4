@@ -1,11 +1,10 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Proj4 {
 
     // RANDOM DEAL
-    //int[] value = new int[5];
-    //int[] suit = new int[5];
+    // int[] value = new int[5];
+    // int[] suit = new int[5];
 
     // Royal Flush
     // int[] value = {10, 12, 14, 13, 11};
@@ -28,8 +27,8 @@ public class Proj4 {
     // int[] suit = {1,1,1,1,1};
 
     // Straight
-     int[] value = {9, 7, 8, 6, 5};
-     int[] suit = {1,2,4,3,1};
+    // int[] value = {9, 7, 8, 6, 5};
+    // int[] suit = {1,2,4,3,1};
 
     // 3 of kind
     // int[] value = {9, 7, 9, 2, 9};
@@ -64,12 +63,12 @@ public class Proj4 {
     }
 
     private void checkContinue() {
-        System.out.println("Play Again (Y or N)?");
+        System.out.print("Play Again (Y or N)?");
         String response = scnr.nextLine();
 
-        while (response.toLowerCase().charAt(0) == 'y' || response.toLowerCase().charAt(0) == 'n') {
+        while (response.toLowerCase().charAt(0) != 'y' && response.toLowerCase().charAt(0) != 'n') {
             System.out.println("Please enter a 'Y' or 'N' only");
-            System.out.println("Play Again (Y or N)?");
+            System.out.print("Play Again (Y or N)?");
             response = scnr.nextLine();
         }
 
@@ -79,7 +78,6 @@ public class Proj4 {
 
     private void checkHand() {
         String result = "";
-
 
         // High card
         int highest = 0;
@@ -102,10 +100,10 @@ public class Proj4 {
 
         // 3 of a kind
         int matched = 0;
-        for (int i = 0; i < value.length; i++) {
-            for (int j = i; j < value.length; j++) {
-                if (i != j) {
-                    if (value[i] == value[j]) {
+        for (int k = 0; k < value.length; k++) {
+            for (int l = k; l < value.length; l++) {
+                if (k != l) {
+                    if (value[k] == value[l]) {
                         matched++;
                         if (matched == 3) {
                             result = "You were dealt 3 of a kind.";
@@ -116,18 +114,77 @@ public class Proj4 {
         }
 
         // Straight
-        boolean broken = false;
+        boolean straightBroken = false;
+        for (int i = 0; i < value.length - 1; i++) {
+            if (value[i] - 1 != value[i + 1]) {
+                straightBroken = true;
+                break;
+            }
+        }
+        if (!straightBroken) result = "You were dealt a Straight";
+
+        // Flush
+        int matchSuit = suit[0];
+        boolean flushBroken = false;
+        for (int singleSuit : suit) {
+            if (singleSuit != matchSuit) {
+                flushBroken = true;
+                break;
+            }
+        }
+        if (!flushBroken) result = "You were dealt a flush";
+
+        // Full House
+        int fullMatched = 0;
         for (int i = 0; i < value.length; i++) {
-            broken = true;
-            for (int j = 0; j < value.length; j++) {
-                if (i != j) {
-                    if (value[i] + 1 == value[j]) broken = false;
+            for (int j = i; j < value.length; j++) {
+                if (j != i) {
+                    if (value[i] == value[j]) fullMatched++;
+                    if (fullMatched == 4) result = "You were dealt a Full House.";
                 }
             }
         }
-        if (!broken) result = "You were dealt a Straight";
 
-        System.out.println(result);
+        // 4 of a kind
+        int fourMatches = 0;
+        for (int i = 0; i < value.length; i++) {
+            for (int j = i; j < value.length; j++) {
+                if (value[i] == value[j]) {
+                    fourMatches++;
+                    if (fourMatches == 4) {
+                        result = "You were dealt 4 of a kind.";
+                    }
+                }
+            }
+            fourMatches = 0;
+        }
+
+        // Straight Flush
+        boolean straightFlushBroken = false;
+        for (int i = 0; i < value.length - 1; i++) {
+            if (value[i] - 1 != value[i + 1] || suit[i] != suit[i + 1]) {
+                straightFlushBroken = true;
+                break;
+            }
+        }
+        if (!straightFlushBroken) result = "You were dealt a Straight Flush";
+
+        // Royal Flush
+        boolean royalFlushBroken = false;
+        for (int item : value) {
+            royalFlushBroken = true;
+            for (int j = 10; j < 15; j++) {
+                if (item == j) {
+                    royalFlushBroken = false;
+                    break;
+                }
+            }
+
+            if (royalFlushBroken) break;
+        }
+        if (!royalFlushBroken) result = "You were dealt a Royal Flush";
+
+        System.out.println("\n" + result + "\n");
     }
 
     private void sortHand() {
