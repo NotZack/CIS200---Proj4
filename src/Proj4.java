@@ -1,10 +1,18 @@
 import java.util.*;
 
+/**
+ * Proj4.java
+ * Zackary Nichol / Friday 3:30PM lab session
+ *
+ * After the user logs in with their username and password, deals 5 cards depending on which value and suit array is
+ * not commented. Then tells the user what hand that they got and asks the user if they want to play again.
+ */
+
 public class Proj4 {
 
     // RANDOM DEAL
-    // int[] value = new int[5];
-    // int[] suit = new int[5];
+     int[] value = new int[5];
+     int[] suit = new int[5];
 
     // Royal Flush
     // int[] value = {10, 12, 14, 13, 11};
@@ -52,7 +60,7 @@ public class Proj4 {
     private boolean playing = true;
 
     public void start() {
-        //validateCredentials();
+        validateCredentials();
 
         while (playing) {
             dealCards();
@@ -271,6 +279,9 @@ public class Proj4 {
                 System.out.println("User and/or Password is invalid\n");
             }
         }
+
+        System.out.println("\n** Welcome to the 2020 Las Vegas Poker Festival! **\n" +
+                " (Application developed by Zackary Nichol) \n");
     }
 
     private String cardValueLookup(int value) {
